@@ -95,7 +95,7 @@ class AddPost(View):  # Создали класс который отвечае�
         if request.user.is_anonymous:
             return redirect('/login')
         form = AddPostForm()  # Создали экземпляр формы
-        context = {'form': form}  # Поместили в словарь контекста который передадим в страницу
+        context = {'form': form}  # Поместили в словарь контекста который передадим в страниц
 
         return render(request, 'add_post.html', context=context)  # Возвращаем готовую HTML-страницу
 
@@ -107,9 +107,7 @@ class AddPost(View):  # Создали класс который отвечае�
         if form.is_valid():  # Если форма валидна (Если все поля прошли валидацию)
             Post.objects.create(
                 owner=request.user,
-                title=form.cleaned_data.get('title'),
-                text=form.cleaned_data.get('text'),
-                price=form.cleaned_data.get('price'),
+                **form.cleaned_data
             )  # Создали объект поста с данными которые мы передали в форме
             return redirect('/')
 
